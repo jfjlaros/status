@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "/local/projects/status/scripts/lib"
+. "/local/projects/status/scripts/lib.bash"
 
 capacity=$(cat /sys/class/power_supply/BAT0/capacity)
 battery_status=$(cat /sys/class/power_supply/BAT0/status | cut -b 1)

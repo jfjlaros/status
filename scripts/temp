@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "/local/projects/status/scripts/lib"
+. "/local/projects/status/scripts/lib.bash"
 
 raw_temp=$(cat /sys/class/thermal/thermal_zone3/temp)
 temperature=$(echo 1k ${raw_temp} 1000 / p | dc)

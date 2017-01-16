@@ -1,4 +1,5 @@
 scale() {
+  # Convert a value to a percentage.
   value=${1}
   minimum=${2}
   maximum=${3}
@@ -7,6 +8,7 @@ scale() {
 }
 
 pick_colour() {
+  # Convert a percentage to a colour in the range green to red.
   percentage=${1}
 
   red=255
@@ -21,6 +23,7 @@ pick_colour() {
 }
 
 pick_icon() {
+  # Convert a percentage to an icon.
   percentage=${1}
   icons=${2}
 
@@ -50,4 +53,3 @@ format_info() {
   echo "${info_string}"
   echo ${colour}
 }
-
