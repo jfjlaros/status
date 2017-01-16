@@ -1,10 +1,54 @@
-status_info() {
-  value=${1%.*}
+scale() {
+  value=${1}
+  minimum=${2}
+  maximum=${3}
 
-  for key in ${!gradient[*]}; do
-    if [ ${key} -gt ${value} ]; then
-      echo ${gradient[key]}
-      return
-    fi
-  done
+  echo $(((value - minimum) * 100 / (maximum - minimum)))
 }
+
+pick_colour() {
+  percentage=${1}
+
+  red=255
+  green=255
+  if [ ${percentage} -lt 50 ]; then
+    red=$((percentage * 255 / 50))
+  else
+    green=$(((100 - percentage) * 255 / 50))
+  fi
+
+  printf "#%02x%02x00\n" ${red} ${green}
+}
+
+pick_invert_colour() {
+  percentage=${1}
+
+  pick_colour $((100 - ${percentage}))
+}
+
+pick_icon() {
+  percentage=${1}
+  icons=${2}
+
+  number_of_icons=${#icons}
+  position=$((percentage * number_of_icons / 101))
+  echo ${icons:position:1}
+}
+
+format_info() {
+  icons=${1}
+  value=${2}
+  info=${3}
+  minimum=${4-0}
+  maximum=${5-100}
+
+  percentage=$(scale ${value} ${minimum} ${maximum})
+  icon=$(pick_icon ${percentage} ${icons}) 
+  colour=$(pick_invert_colour ${percentage})
+
+  info_string="${icon} ${info}"
+  echo "${info_string}"
+  echo "${info_string}"
+  echo ${colour}
+}
+
