@@ -1,0 +1,10 @@
+status_info() {
+  value=${1%.*}
+
+  for key in ${!gradient[*]}; do
+    if [ ${key} -gt ${value} ]; then
+      echo ${gradient[key]}
+      return
+    fi
+  done
+}

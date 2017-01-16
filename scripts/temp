@@ -1,0 +1,19 @@
+#!/bin/bash
+
+. "/local/projects/status/scripts/lib"
+
+gradient=(
+  [20]=" #00FF00"
+  [40]=" #A8FF00"
+  [60]=" #FFF600"
+  [80]=" #FFAE00"
+  [999]=" #FF0000"
+)
+
+value=$(echo 1k $(cat /sys/class/thermal/thermal_zone3/temp) 1000 / p | dc)
+info=($(status_info ${value}))
+
+info_string=$(printf "%s %4.1f°C" ${info[0]} ${value})
+echo "${info_string}"
+echo "${info_string}"
+echo ${info[1]}
