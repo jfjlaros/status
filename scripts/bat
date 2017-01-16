@@ -2,20 +2,7 @@
 
 . "/local/projects/status/scripts/lib"
 
-gradient=(
-   [20]=" #FF0000"
-   [40]=" #FFAE00"
-   [60]=" #FFF600"
-   [80]=" #A8FF00"
-   [999]=" #00FF00"
-)
+capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+battery_status=$(cat /sys/class/power_supply/BAT0/status | cut -b 1)
 
-energy_now=$(cat /sys/class/power_supply/BAT0/energy_now)
-energy_full=$(cat /sys/class/power_supply/BAT0/energy_full)
-value=$(echo ${energy_now} 100 \* ${energy_full} / p | dc)
-info=($(status_info ${value}))
-
-info_string=$(printf "%s %i%%" ${info[0]} ${value})
-echo "${info_string}"
-echo "${info_string}"
-echo ${info[1]}
+format_info "" ${capacity} "${capacity}% ${battery_status}" true

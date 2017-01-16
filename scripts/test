@@ -1,8 +1,0 @@
-#!/bin/bash
-
-. "/local/projects/status/scripts/lib"
-
-
-value=$(cat /sys/class/power_supply/BAT0/capacity)
-
-format_info "" ${value} "A to the K"

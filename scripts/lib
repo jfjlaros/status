@@ -20,12 +20,6 @@ pick_colour() {
   printf "#%02x%02x00\n" ${red} ${green}
 }
 
-pick_invert_colour() {
-  percentage=${1}
-
-  pick_colour $((100 - ${percentage}))
-}
-
 pick_icon() {
   percentage=${1}
   icons=${2}
@@ -39,12 +33,17 @@ format_info() {
   icons=${1}
   value=${2}
   info=${3}
-  minimum=${4-0}
-  maximum=${5-100}
+  invert=${4-false}
+  minimum=${5-0}
+  maximum=${6-100}
 
   percentage=$(scale ${value} ${minimum} ${maximum})
   icon=$(pick_icon ${percentage} ${icons}) 
-  colour=$(pick_invert_colour ${percentage})
+  if [ ${invert} == "true" ]; then
+    colour=$(pick_colour $((100 - ${percentage})))
+  else
+    colour=$(pick_colour ${percentage})
+  fi
 
   info_string="${icon} ${info}"
   echo "${info_string}"
