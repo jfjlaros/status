@@ -1,0 +1,16 @@
+#!/bin/bash
+
+. "/local/projects/status/lib/lib.bash"
+
+interface=${BLOCK_INSTANCE}
+icon=${BLOCK_NAME}
+
+essid=$(/sbin/iwgetid -r ${interface})
+if [ ${essid} ]; then
+  raw_quality=$(grep "^ ${interface}" /proc/net/wireless | cut -b 16-17)
+  
+  quality=$(scale ${raw_quality} 0 70)
+  format_info "" ${quality} "${icon} ${essid} $(printf "%3d" ${quality})%" true
+else
+  format_info "" 100 "${icon}"
+fi

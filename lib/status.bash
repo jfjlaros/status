@@ -1,18 +1,18 @@
 scale() {
   # Convert a value to a percentage.
-  value=${1}
-  minimum=${2}
-  maximum=${3}
+  local value=${1}
+  local minimum=${2}
+  local maximum=${3}
 
   echo $(((value - minimum) * 100 / (maximum - minimum)))
 }
 
 pick_colour() {
   # Convert a percentage to a colour in the range green to red.
-  percentage=${1}
+  local percentage=${1}
+  local red=255
+  local green=255
 
-  red=255
-  green=255
   if [ ${percentage} -lt 50 ]; then
     red=$((percentage * 255 / 50))
   else
@@ -24,32 +24,37 @@ pick_colour() {
 
 pick_icon() {
   # Convert a percentage to an icon.
-  percentage=${1}
-  icons=${2}
+  local percentage=${1}
+  local icons=${2}
+  local number_of_icons=${#icons}
+  local position=$((percentage * number_of_icons / 101))
 
-  number_of_icons=${#icons}
-  position=$((percentage * number_of_icons / 101))
   echo ${icons:position:1}
 }
 
 format_info() {
-  icons=${1}
-  value=${2}
-  info=${3}
-  invert=${4-false}
-  minimum=${5-0}
-  maximum=${6-100}
+  local icons=${1}
+  local value=${2}
+  local info=${3}
+  local invert=${4-false}
+  local minimum=${5-0}
+  local maximum=${6-100}
+  local percentage=$(scale ${value} ${minimum} ${maximum})
+  local icon
+  local colour
+  local info_string
 
-  percentage=$(scale ${value} ${minimum} ${maximum})
-  icon=$(pick_icon ${percentage} ${icons}) 
+  if [ ${icons} ]; then
+    icon="$(pick_icon ${percentage} ${icons}) "
+  fi
   if [ ${invert} == "true" ]; then
     colour=$(pick_colour $((100 - ${percentage})))
   else
     colour=$(pick_colour ${percentage})
   fi
 
-  info_string="${icon} ${info}"
+  info_string="${icon}${info}"
   echo "${info_string}"
-  echo "${info_string}"
+  echo
   echo ${colour}
 }

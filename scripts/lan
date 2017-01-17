@@ -1,0 +1,12 @@
+#!/bin/bash
+
+. "/local/projects/status/lib/lib.bash"
+
+interface=${BLOCK_INSTANCE}
+icon=${BLOCK_NAME}
+
+if grep "^${interface}" /proc/net/route > /dev/null; then
+  format_info "" 0 "${icon}"
+else
+  format_info "" 100 "${icon}"
+fi

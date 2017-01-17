@@ -1,8 +1,9 @@
 #!/bin/bash
 
-. "/local/projects/status/scripts/lib.bash"
+. "/local/projects/status/lib/lib.bash"
 
-raw_temp=$(cat /sys/class/thermal/thermal_zone3/temp)
+zone=${BLOCK_INSTANCE}
+raw_temp=$(cat /sys/class/thermal/thermal_zone${zone}/temp)
 temperature=$(echo 1k ${raw_temp} 1000 / p | dc)
 
 format_info "" ${raw_temp} "${temperature}°C" false 0 100000
