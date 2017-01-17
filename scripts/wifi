@@ -1,9 +1,10 @@
 #!/bin/bash
 
-. "/local/projects/status/lib/lib.bash"
+. "/local/projects/status/lib/status.bash"
 
-interface=${BLOCK_INSTANCE}
-icon=${BLOCK_NAME}
+args=(${BLOCK_INSTANCE})
+icon=${args[0]}
+interface=${args[1]}
 
 essid=$(/sbin/iwgetid -r ${interface})
 if [ ${essid} ]; then

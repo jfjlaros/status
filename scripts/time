@@ -1,0 +1,9 @@
+#!/bin/bash
+
+. "/local/projects/status/lib/status.bash"
+
+icon=${BLOCK_INSTANCE}
+
+date_time=$(date "+%Y-%m-%d %H:%M:%S")
+
+format_info "" 0 " ${date_time}"

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+loads=""
+
+for i in 0 1 2 3; do
+  idle=$(mpstat 1 1 -P $i | tail -1 | sed 's/.* //;s/\..*//')
+  load=$((100 - ${idle}))
+  loads="${loads} $(printf "%3d%%" ${load})"
+done
+
+echo "$loads"
+echo "$loads"
