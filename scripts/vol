@@ -1,0 +1,15 @@
+#!/bin/bash
+
+. "/local/projects/status/lib/status.bash"
+
+volume_line=$(amixer sget 'Master' | grep "^  Front Left:")
+volume=$(echo ${volume_line} | sed 's/%.*//;s/.*\[//')
+switch=$(echo ${volume_line} | sed 's/.*\[//;s/]$//')
+
+if [ ${switch} == "on" ]; then
+  info="${volume}%"
+else
+  info="MUTE"
+fi
+
+format_info "" ${volume} " ${info}"
