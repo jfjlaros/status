@@ -1,12 +1,23 @@
 #!/bin/bash
 
-loads=""
+. "/local/projects/status/lib/status.bash"
 
-for i in 0 1 2 3; do
-  idle=$(mpstat 1 1 -P $i | tail -1 | sed 's/.* //;s/\..*//')
-  load=$((100 - ${idle}))
-  loads="${loads} $(printf "%3d%%" ${load})"
+IFS="
+"
+
+stats=$(mpstat 1 1 -P ALL | grep "Average:" | grep -v "CPU")
+
+loads=""
+for line in ${stats}; do 
+  cpu=$(echo "${line}" | cut -b 14-16)
+  idle=$(echo "${line}" | cut -b 92-93)
+
+  load=$((100 - idle))
+  if [ ${cpu} == "all" ]; then
+    average=${load}
+  else
+    loads="${loads} $(printf "%3d%%" ${load})"
+  fi
 done
 
-echo "$loads"
-echo "$loads"
+format_info "" ${average} "[${loads}] $(printf "%3d%%" ${average})"
