@@ -1,0 +1,43 @@
+command=/usr/share/i3blocks/status/scripts/$BLOCK_NAME
+separator_block_width=15
+markup=none
+
+[lan]
+instance=⌇ eth0
+interval=10
+separator=false
+
+[wifi]
+instance= wlan0
+interval=10
+separator=false
+
+[lan]
+instance= wwan0
+interval=10
+separator=false
+
+[lan]
+instance= dns0
+interval=10
+separator=false
+
+[lan]
+instance= tun0
+interval=10
+
+[cpu]
+interval=10
+
+[vol]
+interval=1
+
+[bat]
+interval=10
+
+[temp]
+instance=1
+interval=10
+
+[time]
+interval=1
