@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "/local/projects/status/lib/status.bash"
+. "/usr/share/i3blocks/status/lib/status.bash"
 
 args=(${BLOCK_INSTANCE})
 icon=${args[0]}

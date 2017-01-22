@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "/local/projects/status/lib/status.bash"
+. "/usr/share/i3blocks/status/lib/status.bash"
 
 capacity=$(cat /sys/class/power_supply/BAT0/capacity)
 battery_status=$(cat /sys/class/power_supply/BAT0/status)
