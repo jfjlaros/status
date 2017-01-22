@@ -10,7 +10,10 @@ Get the repository (as root) and install it in the i3blocks directory.
     git clone git://github.com/jfjlaros/status.git /usr/share/i3blocks/status
 
 To configure your i3blocks behaviour, edit `~/.config/i3blocks/config`. Please
-have a look at this [sample configuration file](i3blocks_config.sample).
+have a look at this [sample configuration file](i3blocks_config.sample). The
+result will look something like this:
+
+![status bar](bar.png)
 
 ## API
 To use the library, simply source the library file from your script.
