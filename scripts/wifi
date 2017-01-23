@@ -7,7 +7,7 @@ icon=${args[0]}
 interface=${args[1]}
 
 essid=$(/sbin/iwgetid -r ${interface})
-if [ ${essid} ]; then
+if [ "${essid}" ]; then
   raw_quality=$(grep "^ ${interface}" /proc/net/wireless | cut -b 16-17)
   
   quality=$(scale ${raw_quality} 0 70)
