@@ -5,13 +5,30 @@
 args=(${BLOCK_INSTANCE})
 icon=${args[0]}
 interface=${args[1]}
+timer_file="wifi_timer.dat"
+
+case ${BLOCK_BUTTON} in
+  1)
+    if ! pkill wicd-client; then
+      screen -d -m wicd-client -n
+    fi
+    ;;
+  3)
+    set_timer ${timer_file}
+    ;;
+esac
 
 essid=$(/sbin/iwgetid -r ${interface})
 if [ "${essid}" ]; then
   raw_quality=$(grep "^ ${interface}" /proc/net/wireless | cut -b 16-17)
-  
   quality=$(scale ${raw_quality} 0 70)
-  format_info "" ${quality} "${icon} ${essid} $(printf "%3d" ${quality})%" true
+
+  if get_timer ${timer_file} 5; then
+    info_string=$(ip addr show wlan0 | grep "    inet " | cut -f 6 -d " ")
+  else
+    info_string="${essid} $(printf "%3d" ${quality})%"
+  fi
+  format_info "" ${quality} "${icon} ${info_string}" true
 else
   format_info "" 100 "${icon}"
 fi

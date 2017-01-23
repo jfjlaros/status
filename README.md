@@ -22,8 +22,7 @@ To use the library, simply source the library file from your script.
 . "/usr/share/i3blocks/status/lib/status.bash"
 ```
 
-This imports three functions: `scale`, `pick_colour`, `pick_icon` and a wrapper
-function `format_info`.
+This imports a number of functions and a wrapper function `format_info`.
 
 The `scale` function is used to convert a value, given a minimum and a maximum,
 to a percentage. For example, to convert the value 120 in the range 40 to 1000,
@@ -48,6 +47,27 @@ example:
 ```bash
 $ pick_icon 21 ABCDE
 B
+```
+
+The `set_timer` function records the current time. This can later be used to
+see how much time has passed.
+
+```bash
+$ set_timer timer.dat
+$ cat /run/user/${UID}/i3/timer.dat
+1485202697
+```
+
+The `get_timer` function checks whether a certain amount of time has passed. It
+returns 1 if the timer is still running, otherwise it will remove the recorded
+time and return 0.
+
+```bash
+$ set_timer timer.dat
+$ if get_timer timer.dat 5; then echo not done yet; fi
+not done yet
+$ sleep 6
+$ if get_timer timer.dat 5; then echo not done yet; fi
 ```
 
 Finally, the wrapper function named `format_info` will pick a colour and an

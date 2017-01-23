@@ -5,9 +5,19 @@
 args=(${BLOCK_INSTANCE})
 icon=${args[0]}
 interface=${args[1]}
+timer_file="${interface}_timer.dat"
 
-if grep "^${interface}" /proc/net/route > /dev/null; then
-  format_info "" 0 "${icon}"
-else
-  format_info "" 100 "${icon}"
+if [ ${BLOCK_BUTTON} == 3 ]; then
+  set_timer ${timer_file}
 fi
+
+value=100
+if grep "^${interface}" /proc/net/route > /dev/null; then
+  value=0
+  if get_timer ${timer_file} 5; then
+    info_string=" "$(ip addr show ${interface} | \
+      grep "    inet " | cut -f 6 -d " ")
+  fi
+fi
+
+format_info "" ${value} "${icon}${info_string}"
