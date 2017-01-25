@@ -7,13 +7,12 @@ battery_status=$(cat /sys/class/power_supply/BAT0/status)
 
 case ${battery_status} in
   *harging)
-    remaining_time=$(acpi | sed 's/.*, //;s/ .*//')
+    remaining_time=" "$(acpi | sed 's/.*, //;s/ .*//')
     ;;&
   Discharging)
-    power=" "
     ;;
   *)
-    power="  "
+    power=" "
     ;;
 esac
 
