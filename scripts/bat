@@ -5,13 +5,16 @@
 capacity=$(cat /sys/class/power_supply/BAT0/capacity)
 battery_status=$(cat /sys/class/power_supply/BAT0/status)
 
-power=""
-if [ ${battery_status} != "Unknown" ]; then
-  power=" "
-  remaining_time=$(acpi | sed 's/.*, //;s/ .*//')
-fi
-if [ ${battery_status} != "Discharging" ]; then
-  power="  "
-fi
+case ${battery_status} in
+  *harging)
+    remaining_time=$(acpi | sed 's/.*, //;s/ .*//')
+    ;;&
+  Discharging)
+    power=" "
+    ;;
+  *)
+    power="  "
+    ;;
+esac
 
 format_info "" ${capacity} "${capacity}%${power}${remaining_time}" true
