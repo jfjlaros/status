@@ -77,9 +77,9 @@ key_launch() {
   local cmd=${2}
   local args=${*:3}
 
-  local pid_file="/run/user/${UID}/i3/$(basename ${0})_screen.pid"
-
   if [ ${BLOCK_BUTTON} == ${button} ]; then
+    local pid_file="/run/user/${UID}/i3/$(basename ${0})_screen.pid"
+
     if [ -f ${pid_file} ]; then
       kill $(cat ${pid_file})
       rm ${pid_file}
@@ -92,6 +92,7 @@ key_launch() {
 parse_args() {
   # Argument parser for the BLOCK_INSTANCE variable.
   local args=(${BLOCK_INSTANCE})
+
   local offset=0
 
   for arg in ${*}; do
