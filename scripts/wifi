@@ -2,9 +2,7 @@
 
 . "/usr/share/i3blocks/status/lib/status.bash"
 
-args=(${BLOCK_INSTANCE})
-icon=${args[0]}
-interface=${args[1]}
+parse_args icon interface
 
 key_launch 1 wicd-client -n
 key_command 3 set_timer

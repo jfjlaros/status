@@ -71,15 +71,28 @@ $ if get_timer 5; then echo not done yet; fi
 ```
 
 The `key_command` function execute a command when a button is pressed, e.g.,
-```
-key_command 3 set_timer
+```bash
+$ BLOCK_BUTTON="3"
+$ key_command 3 set_timer
+$ cat /run/user/${UID}/i3/bash_timer.dat
+1485626146
 ```
 
 The `key_launch` function launches or kills an application when a button is
 pressed. The following example will launch `wicd-client -n`, or, if the
 application is already running, will kill the running instance.
+```bash
+$ BLOCK_BUTTON="1"
+$ key_command 1 wicd-client -n
 ```
-key_command 1 wicd-client -n
+
+the `parse_args` function assigns each word in the `BLOCK_INSTANCE` variable to
+a variable.
+```bash
+$ BLOCK_INSTANCE="10 wlan0"
+$ parse_args 10 dev
+$ echo ${dev}
+wlan0
 ```
 
 Finally, the wrapper function named `format_info` will pick a colour and an

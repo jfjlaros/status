@@ -2,7 +2,8 @@
 
 . "/usr/share/i3blocks/status/lib/status.bash"
 
-zone=${BLOCK_INSTANCE}
+parse_args zone
+
 raw_temp=$(cat /sys/class/thermal/thermal_zone${zone}/temp)
 temperature=$(echo 1k ${raw_temp} 1000 / p | dc)
 

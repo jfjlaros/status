@@ -2,10 +2,7 @@
 
 . "/usr/share/i3blocks/status/lib/status.bash"
 
-args=(${BLOCK_INSTANCE})
-icon=${args[0]}
-interface=${args[1]}
-signal_command=${args[2]}
+parse_args icon interface signal_command
 
 key_command 3 set_timer
 
