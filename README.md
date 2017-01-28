@@ -53,8 +53,8 @@ The `set_timer` function records the current time. This can later be used to
 see how much time has passed.
 
 ```bash
-$ set_timer timer.dat
-$ cat /run/user/${UID}/i3/timer.dat
+$ set_timer
+$ cat /run/user/${UID}/i3/bash_timer.dat
 1485202697
 ```
 
@@ -63,11 +63,11 @@ returns 1 if the timer is still running, otherwise it will remove the recorded
 time and return 0.
 
 ```bash
-$ set_timer timer.dat
-$ if get_timer timer.dat 5; then echo not done yet; fi
+$ set_timer
+$ if get_timer 5; then echo not done yet; fi
 not done yet
 $ sleep 6
-$ if get_timer timer.dat 5; then echo not done yet; fi
+$ if get_timer 5; then echo not done yet; fi
 ```
 
 Finally, the wrapper function named `format_info` will pick a colour and an

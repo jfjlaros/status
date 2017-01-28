@@ -2,13 +2,12 @@
 
 . "/usr/share/i3blocks/status/lib/status.bash"
 
-time_file="time_timer.dat"
 duration=5
 
 if [ ${BLOCK_BUTTON} == 3 ]; then
-  set_timer ${time_file}
+  set_timer
 fi
-if get_timer ${time_file} ${duration}; then
+if get_timer ${duration}; then
   info_string=$(uptime -p)
 else
   info_string=$(date "+%Y-%m-%d %H:%M:%S")

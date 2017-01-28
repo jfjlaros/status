@@ -36,24 +36,27 @@ pick_icon() {
 
 set_timer() {
   # Record the current time.
-  local time_file="/run/user/${UID}/i3/${1}"
+  local time_file="/run/user/${UID}/i3/$(basename ${0})_timer.dat"
 
   date "+%s" > ${time_file}
 }
 
 get_timer() {
   # Check if the timer has been running for longer than a certain duration.
-  local time_file="/run/user/${UID}/i3/${1}"
-  local duration=${2}
+  local time_file="/run/user/${UID}/i3/$(basename ${0})_timer.dat"
+  local duration=${1}
 
-  local timer_start=$(cat ${time_file})
-  local now=$(date "+%s")
+  if [ -f ${time_file} ]; then
+    local timer_start=$(cat ${time_file})
+    local now=$(date "+%s")
 
-  if [ $((now - timer_start + 1)) -gt ${duration} ]; then
-    rm ${time_file}
-    return 1
+    if [ $((now - timer_start + 1)) -gt ${duration} ]; then
+      rm ${time_file}
+    else
+      return 0
+    fi
   fi
-  return 0
+  return 1
 }
 
 format_info() {
