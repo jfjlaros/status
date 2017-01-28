@@ -1,0 +1,9 @@
+#!/bin/bash
+
+. "/usr/share/i3blocks/status/lib/status.bash"
+
+parse_args icon cmd
+
+key_launch 1 ${cmd}
+
+format_info "${icon}" 0 ""

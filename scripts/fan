@@ -1,0 +1,7 @@
+#!/bin/bash
+
+. "/usr/share/i3blocks/status/lib/status.bash"
+
+speed=$(grep speed /proc/acpi/ibm/fan | cut -b 9-)
+
+format_info "" ${speed} "${speed}rpm" false 0 6000
