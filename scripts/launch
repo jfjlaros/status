@@ -6,4 +6,4 @@ parse_args icon cmd
 
 key_launch 1 ${cmd}
 
-format_info "${icon}" 0 ""
+format_info "" 0 "${icon}"
