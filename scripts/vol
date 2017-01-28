@@ -12,4 +12,4 @@ else
   info="MUTE"
 fi
 
-format_info "" ${volume} " ${info}"
+format_info "" ${volume} "${info}"
