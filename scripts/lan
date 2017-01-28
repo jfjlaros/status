@@ -7,9 +7,7 @@ icon=${args[0]}
 interface=${args[1]}
 signal_command=${args[2]}
 
-if [ ${BLOCK_BUTTON} == 3 ]; then
-  set_timer
-fi
+key_command 3 set_timer
 
 value=0
 if grep "^${interface}" /proc/net/route > /dev/null; then

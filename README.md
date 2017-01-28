@@ -70,6 +70,18 @@ $ sleep 6
 $ if get_timer 5; then echo not done yet; fi
 ```
 
+The `key_command` function execute a command when a button is pressed, e.g.,
+```
+key_command 3 set_timer
+```
+
+The `key_launch` function launches or kills an application when a button is
+pressed. The following example will launch `wicd-client -n`, or, if the
+application is already running, will kill the running instance.
+```
+key_command 1 wicd-client -n
+```
+
 Finally, the wrapper function named `format_info` will pick a colour and an
 icon based on a value and it will echo some additional info back. For simple
 status scripts, this function is probably all that is needed. A simple example

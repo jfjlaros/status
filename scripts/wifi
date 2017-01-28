@@ -6,16 +6,8 @@ args=(${BLOCK_INSTANCE})
 icon=${args[0]}
 interface=${args[1]}
 
-case ${BLOCK_BUTTON} in
-  1)
-    if ! pkill wicd-client; then
-      screen -d -m wicd-client -n
-    fi
-    ;;
-  3)
-    set_timer
-    ;;
-esac
+key_launch 1 wicd-client -n
+key_command 3 set_timer
 
 essid=$(/sbin/iwgetid -r ${interface})
 if [ "${essid}" ]; then

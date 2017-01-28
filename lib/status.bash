@@ -43,8 +43,9 @@ set_timer() {
 
 get_timer() {
   # Check if the timer has been running for longer than a certain duration.
-  local time_file="/run/user/${UID}/i3/$(basename ${0})_timer.dat"
   local duration=${1}
+
+  local time_file="/run/user/${UID}/i3/$(basename ${0})_timer.dat"
 
   if [ -f ${time_file} ]; then
     local timer_start=$(cat ${time_file})
@@ -57,6 +58,34 @@ get_timer() {
     fi
   fi
   return 1
+}
+
+key_command() {
+  # Execute a command on key press.
+  local button=${1}
+  local cmd=${2}
+  local args=${*:3}
+
+  if [ ${BLOCK_BUTTON} == ${button} ]; then
+    ${cmd} ${args}
+  fi
+}
+
+key_launch() {
+  # Execute or kill a command on key press.
+  local button=${1}
+  local cmd=${2}
+  local args=${*:3}
+
+  local pid_file="/run/user/${UID}/i3/$(basename ${0})_screen.pid"
+  if [ ${BLOCK_BUTTON} == ${button} ]; then
+    if [ -f ${pid_file} ]; then
+      kill $(cat ${pid_file})
+      rm ${pid_file}
+    else
+      screen -d -m bash -c 'echo $$ > '${pid_file}'; '${cmd} ${args}
+    fi
+  fi
 }
 
 format_info() {
