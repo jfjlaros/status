@@ -24,6 +24,7 @@ To use the library, simply source the library file from your script.
 
 This imports a number of functions and a wrapper function `format_info`.
 
+### Functions
 The `scale` function is used to convert a value, given a minimum and a maximum,
 to a percentage. For example, to convert the value 120 in the range 40 to 1000,
 to a percentage:
@@ -95,6 +96,7 @@ $ echo ${dev}
 wlan0
 ```
 
+### Wrapper function
 Finally, the wrapper function named `format_info` will pick a colour and an
 icon based on a value and it will echo some additional info back. For simple
 status scripts, this function is probably all that is needed. A simple example
