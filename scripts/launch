@@ -6,4 +6,4 @@ parse_args icon cmd
 
 key_launch 1 ${cmd}
 
-format_info "" 0 "${icon}"
+format_info "" $(key_launch_running ${cmd}) "${icon}"

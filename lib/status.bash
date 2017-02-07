@@ -78,14 +78,27 @@ key_launch() {
   local args=${*:3}
 
   if [ ${BLOCK_BUTTON} == ${button} ]; then
-    local pid_file="/run/user/${UID}/i3/$(basename ${0})_screen.pid"
+    local pid_file="/run/user/${UID}/i3/$(basename ${0})_${cmd}_screen.pid"
 
     if [ -f ${pid_file} ]; then
       kill $(cat ${pid_file})
       rm ${pid_file}
     else
+      touch ${pid_file}
       screen -d -m bash -c 'echo $$ > '${pid_file}'; '${cmd} ${args}
     fi
+  fi
+}
+
+key_launch_running() {
+  local cmd=${1}
+
+  local pid_file="/run/user/${UID}/i3/$(basename ${0})_${cmd}_screen.pid"
+
+  if [ -f ${pid_file} ]; then
+    echo 50
+  else
+    echo 0
   fi
 }
 
