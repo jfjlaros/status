@@ -1,3 +1,12 @@
+_time_file() {
+  echo "/run/user/${UID}/i3/$(basename ${0})_timer.dat"
+}
+
+_pid_file() {
+  echo "/run/user/${UID}/i3/$(basename ${0})_${1}_screen.pid"
+}
+
+
 scale() {
   # Convert a value to a percentage.
   local value=${1}
@@ -36,16 +45,14 @@ pick_icon() {
 
 set_timer() {
   # Record the current time.
-  local time_file="/run/user/${UID}/i3/$(basename ${0})_timer.dat"
-
-  date "+%s" > ${time_file}
+  date "+%s" > $(_time_file)
 }
 
 get_timer() {
   # Check if the timer has been running for longer than a certain duration.
   local duration=${1}
 
-  local time_file="/run/user/${UID}/i3/$(basename ${0})_timer.dat"
+  local time_file=$(_time_file)
 
   if [ -f ${time_file} ]; then
     local timer_start=$(cat ${time_file})
@@ -78,7 +85,7 @@ key_launch() {
   local args=${*:3}
 
   if [ ${BLOCK_BUTTON} == ${button} ]; then
-    local pid_file="/run/user/${UID}/i3/$(basename ${0})_${cmd}_screen.pid"
+    local pid_file=$(_pid_file ${cmd})
 
     if [ -f ${pid_file} ]; then
       kill $(cat ${pid_file})
@@ -94,7 +101,7 @@ key_launch_running() {
   # Monitor a running application.
   local cmd=${1}
 
-  local pid_file="/run/user/${UID}/i3/$(basename ${0})_${cmd}_screen.pid"
+  local pid_file=$(_pid_file ${cmd})
 
   if [ -f ${pid_file} ]; then
     if [ -d /proc/$(cat ${pid_file}) ]; then
