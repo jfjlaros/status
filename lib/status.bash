@@ -91,15 +91,20 @@ key_launch() {
 }
 
 key_launch_running() {
+  # Monitor a running application.
   local cmd=${1}
 
   local pid_file="/run/user/${UID}/i3/$(basename ${0})_${cmd}_screen.pid"
 
   if [ -f ${pid_file} ]; then
-    echo 50
-  else
-    echo 0
+    if [ -d /proc/$(cat ${pid_file}) ]; then
+      echo 50
+      return
+    else
+      rm ${pid_file}
+    fi
   fi
+  echo 0
 }
 
 parse_args() {
