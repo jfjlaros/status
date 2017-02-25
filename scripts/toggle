@@ -1,0 +1,7 @@
+#!/bin/bash
+
+. "/usr/share/i3blocks/status/lib/status.bash"
+
+parse_args icon cmd arg_on arg_off
+
+format_info "" $(key_toggle 1 ${cmd} ${arg_on} ${arg_off}) "${icon}"

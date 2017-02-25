@@ -6,6 +6,10 @@ _pid_file() {
   echo "/run/user/${UID}/i3/$(basename ${0})_${1}_screen.pid"
 }
 
+_toggle_file() {
+  echo "/run/user/${UID}/i3/$(basename ${0})_${1}_toggle.state"
+}
+
 
 scale() {
   # Convert a value to a percentage.
@@ -76,6 +80,32 @@ key_command() {
   if [ ${BLOCK_BUTTON} == ${button} ]; then
     ${cmd} ${args}
   fi
+}
+
+key_toggle() {
+  # Toggle something on key press.
+  local button=${1}
+  local cmd=${2}
+  local arg_on=${3}
+  local arg_off=${4}
+
+  local state_file=$(_toggle_file ${cmd})
+
+  if [ ${BLOCK_BUTTON} == ${button} ]; then
+    if [ -f ${state_file} ]; then
+      ${cmd} ${arg_on}
+      rm ${state_file}
+    else
+      touch ${state_file}
+      ${cmd} ${arg_off}
+    fi
+  fi
+
+  if [ -f ${state_file} ]; then
+    echo 100
+    return
+  fi
+  echo 0
 }
 
 key_launch() {
