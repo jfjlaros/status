@@ -4,4 +4,6 @@
 
 parse_args icon cmd arg_on arg_off
 
-format_info "" $(key_toggle 1 ${cmd} ${arg_on} ${arg_off}) "${icon}"
+key_toggle 1 ${cmd} ${arg_on} ${arg_off}
+
+format_info "" $(key_toggle_status ${cmd}) "${icon}"

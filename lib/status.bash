@@ -83,7 +83,7 @@ key_command() {
 }
 
 key_toggle() {
-  # Toggle something on key press.
+  # Toggle a command on key press.
   local button=${1}
   local cmd=${2}
   local arg_on=${3}
@@ -100,6 +100,13 @@ key_toggle() {
       ${cmd} ${arg_off}
     fi
   fi
+}
+
+key_toggle_status() {
+  # Get the status of a toggle command.
+  local cmd=${1}
+
+  local state_file=$(_toggle_file ${cmd})
 
   if [ -f ${state_file} ]; then
     echo 100
