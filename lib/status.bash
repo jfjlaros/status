@@ -10,6 +10,10 @@ _toggle_file() {
   echo "/run/user/${UID}/i3/$(basename ${0})_${1}_toggle.state"
 }
 
+_min() {
+  echo $((${1} < ${2} ? ${1} : ${2}))
+}
+
 
 scale() {
   # Convert a value to a percentage.
@@ -17,7 +21,7 @@ scale() {
   local minimum=${2}
   local maximum=${3}
 
-  echo $(((value - minimum) * 100 / (maximum - minimum)))
+  echo $(_min $(((value - minimum) * 100 / (maximum - minimum))) 100)
 }
 
 pick_colour() {
