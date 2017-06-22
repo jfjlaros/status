@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "/usr/share/i3blocks/status/lib/status.bash"
+. "/usr/share/i3blocks/status/lib/net.bash"
 
 parse_args icon interface signal_command
 
@@ -18,6 +18,9 @@ if grep "^${interface}" /proc/net/route > /dev/null; then
   if get_timer 5; then
     info_string=" "$(ip addr show ${interface} | \
       grep "    inet " | cut -f 6 -d " ")
+  else
+    traffic=$(get_deltas ${interface})
+    info_string="${info_string} [${traffic}]"
   fi
 fi
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "/usr/share/i3blocks/status/lib/status.bash"
+. "/usr/share/i3blocks/status/lib/net.bash"
 
 parse_args icon interface
 
@@ -15,7 +15,8 @@ if [ "${essid}" ]; then
   if get_timer 5; then
     info_string=$(ip addr show wlan0 | grep "    inet " | cut -f 6 -d " ")
   else
-    info_string="${essid} $(printf "%3d" ${quality})%"
+    traffic=$(get_deltas ${interface})
+    info_string="${essid} $(printf "%3d" ${quality})% [${traffic}]"
   fi
   format_info "" ${quality} "${icon} ${info_string}" true
 else
