@@ -2,12 +2,20 @@ _time_file() {
   echo "/run/user/${UID}/i3/$(basename ${0})_timer.dat"
 }
 
+_timestamp_file() {
+  echo "/run/user/${UID}/i3/$(basename ${0})_${1}_timestamp.dat"
+}
+
 _pid_file() {
   echo "/run/user/${UID}/i3/$(basename ${0})_${1}_screen.pid"
 }
 
 _toggle_file() {
   echo "/run/user/${UID}/i3/$(basename ${0})_${1}_toggle.state"
+}
+
+_store_file() {
+  echo "/run/user/${UID}/i3/$(basename ${0})_${1}_store.dat"
 }
 
 _min() {
@@ -62,7 +70,7 @@ get_timer() {
 
   local time_file=$(_time_file)
 
-  if [ -f ${time_file} ]; then
+  if [ -s ${time_file} ]; then
     local timer_start=$(cat ${time_file})
     local now=$(date "+%s")
 
@@ -128,7 +136,7 @@ key_launch() {
   if [ ${BLOCK_BUTTON} == ${button} ]; then
     local pid_file=$(_pid_file ${cmd})
 
-    if [ -f ${pid_file} ]; then
+    if [ -s ${pid_file} ]; then
       kill $(cat ${pid_file})
       rm ${pid_file}
     else
@@ -153,6 +161,65 @@ key_launch_running() {
     fi
   fi
   echo 0
+}
+
+store_time() {
+  # Store the time for later use.
+  local cmd=${1}
+
+  date "+%s" > $(_timestamp_file ${cmd})
+}
+
+get_time() {
+  # Retrieve a stored time value.
+  local cmd=${1}
+
+  local time_file=$(_timestamp_file ${cmd})
+  if [ -s ${time_file} ]; then
+    cat ${time_file}
+  else
+    echo 0
+  fi
+}
+
+update_time() {
+  # Update a stored time value and return the delta.
+  local cmd=${1}
+
+  local value=$(get_time ${cmd})
+  store_time ${cmd}
+
+  echo $(($(get_time ${cmd}) - value))
+}
+
+store_value() {
+  # Store a value for later use.
+  local cmd=${1}
+  local value=${2}
+
+  echo ${value} > $(_store_file ${cmd})
+}
+
+get_value() {
+  # Retrieve a stored value.
+  local cmd=${1}
+
+  local store_file=$(_store_file ${cmd})
+
+  if [ -s ${store_file} ]; then
+    cat ${store_file}
+  else
+    echo 0
+  fi
+}
+
+update_value() {
+  # Update a stored value and return the delta.
+  local cmd=${1}
+  local value=${2}
+
+  echo $((value - $(get_value ${cmd})))
+  store_value ${cmd} ${value}
 }
 
 parse_args() {
