@@ -9,7 +9,7 @@ key_command 3 set_timer
 
 essid=$(/sbin/iwgetid -r ${interface})
 if [ "${essid}" ]; then
-  raw_quality=$(grep "^ ${interface}" /proc/net/wireless | cut -b 16-17)
+  raw_quality=$(grep "^${interface}" /proc/net/wireless | cut -b 19-20)
   quality=$(scale ${raw_quality} 0 70)
 
   if get_timer 5; then

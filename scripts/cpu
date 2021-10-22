@@ -10,7 +10,7 @@ stats=$(mpstat 1 1 -P ALL | grep "Average:" | grep -v "CPU")
 loads=""
 for line in ${stats}; do 
   cpu=$(echo "${line}" | cut -b 14-16)
-  idle=$(echo "${line}" | cut -b 92-93)
+  idle=$(echo "${line}" | cut -b 91-93)
 
   load=$((100 - idle))
   if [ ${cpu} == "all" ]; then
